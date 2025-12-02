@@ -1,24 +1,37 @@
 ﻿
-class Program
+namespace Task2
 {
-    static void Main(string[] args)
+    internal class Program
     {
-        Discount obj = new Discount();
+        static void Main(string[] args)
+        {
+            // question1
+            CustomDelegate.Calculate calc = CustomDelegate.Add;
+            Console.WriteLine("Addition: " + calc(10, 5));
 
-        Discount.Calculate calcAdd = obj.Add;
-        Discount.Calculate calcSub = obj.Subtract;
+            calc = CustomDelegate.Subtract;
+            Console.WriteLine("Subtraction: " + calc(10, 5));
 
-        Console.WriteLine("Add: " + calcAdd(10, 5));
-        Console.WriteLine("Subtract: " + calcSub(10, 5));
 
-        Discount.DiscountStrategy fest = obj.FestivalDiscount;
-        Discount.DiscountStrategy seas = obj.SeasonalDiscount;
-        Discount.DiscountStrategy none = obj.NoDiscount;
+            Console.WriteLine("\n Discount Strategy Example \n");
 
-        double price = 1000;
+            double originalPrice = 1000;
 
-        Console.WriteLine("Festival Discount Price: " + fest(price));
-        Console.WriteLine("Seasonal Discount Price: " + seas(price));
-        Console.WriteLine("No Discount Price: " + none(price));
+            // passing methods one by one
+            Console.WriteLine("Festival Discount Final Price: " +
+                CustomDelegate.CalculateFinalPrice(originalPrice, CustomDelegate.FestivalDiscount));
+
+            Console.WriteLine("Seasonal Discount Final Price: " +
+                CustomDelegate.CalculateFinalPrice(originalPrice, CustomDelegate.SeasonalDiscount));
+
+            Console.WriteLine("No Discount Final Price: " +
+                CustomDelegate.CalculateFinalPrice(originalPrice, CustomDelegate.NoDiscount));
+
+
+            // using lambda for 30% discount
+            Console.WriteLine("\nLambda 30% Discount Final Price: " +
+                CustomDelegate.CalculateFinalPrice(originalPrice, price => price - (price * 0.30)));
+
+        }
     }
 }
